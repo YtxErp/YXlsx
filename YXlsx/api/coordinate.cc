@@ -58,8 +58,8 @@ void Coordinate::Init(const QString& coordinate)
         qWarning() << "Invalid coordinate:" << coordinate << "Row:" << row_ << "Column:" << column_;
 
         // Reset to invalid values
-        row_ = kInvalidInt;
-        column_ = kInvalidInt;
+        row_ = kInvalidValue;
+        column_ = kInvalidValue;
     }
 }
 

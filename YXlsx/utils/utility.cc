@@ -31,32 +31,32 @@ QT_BEGIN_NAMESPACE_YXLSX
 
 QStringList Utility::SplitPath(const QString& path)
 {
-    int idx = path.lastIndexOf(QLatin1Char('/'));
-    if (idx == -1)
+    if (path.isEmpty())
+        return { QStringLiteral("."), QStringLiteral("") };
+
+    const auto index { qMax(path.lastIndexOf(QLatin1Char('/')), path.lastIndexOf(QLatin1Char('\\'))) };
+
+    if (index == -1)
         return { QStringLiteral("."), path };
 
-    return { path.left(idx), path.mid(idx + 1) };
+    return { path.left(index), path.mid(index + 1) };
 }
 
 /*
  * Return the .rel file path based on filePath
  */
-QString Utility::GetRelFilePath(const QString& filePath)
+QString Utility::GetRelFilePath(const QString& file_path)
 {
-    QString ret;
+    if (file_path.isEmpty())
+        return QString();
 
-    int idx = filePath.lastIndexOf(QLatin1Char('/'));
-    if (idx == -1) // not found
-    {
-        // return QString();
+    const auto index { qMax(file_path.lastIndexOf(QLatin1Char('/')), file_path.lastIndexOf(QLatin1Char('\\'))) };
 
-        // dev34
-        ret = QLatin1String("_rels/") + QStringLiteral("%0.rels").arg(filePath);
-        return ret;
+    if (index == -1) {
+        return QStringLiteral("_rels/%1.rels").arg(file_path);
     }
 
-    ret = QString(filePath.left(idx) + QLatin1String("/_rels/") + filePath.mid(idx + 1) + QLatin1String(".rels"));
-    return ret;
+    return QStringLiteral("%1/_rels/%2.rels").arg(file_path.left(index), file_path.mid(index + 1));
 }
 
 /*
@@ -115,8 +115,6 @@ QString Utility::GenerateSheetName(const QStringList& sheet_names, const QString
     return unique_name;
 }
 
-/*
- */
 QString Utility::UnescapeSheetName(const QString& sheetName)
 {
     Q_ASSERT(sheetName.length() > 2 && sheetName.startsWith(QLatin1Char('\'')) && sheetName.endsWith(QLatin1Char('\'')));
@@ -144,7 +142,7 @@ std::pair<int, int> Utility::ParseCoordinate(const QString& cell)
 
     const QRegularExpressionMatch match = re.match(cell);
     if (!match.hasMatch()) {
-        return { kInvalidInt, kInvalidInt };
+        return { kInvalidValue, kInvalidValue };
     }
 
     const QString col_str = match.captured(1);
@@ -154,7 +152,7 @@ std::pair<int, int> Utility::ParseCoordinate(const QString& cell)
     column = ParseColumn(col_str);
 
     if (row <= 0 || column <= 0) {
-        return { kInvalidInt, kInvalidInt };
+        return { kInvalidValue, kInvalidValue };
     }
 
     return { row, column };
@@ -163,13 +161,13 @@ std::pair<int, int> Utility::ParseCoordinate(const QString& cell)
 int Utility::ParseColumn(const QString& column)
 {
     if (column.isEmpty()) {
-        return kInvalidInt;
+        return kInvalidValue;
     }
 
     int col = 0;
     for (QChar ch : column) {
         if (!ch.isLetter()) {
-            return kInvalidInt;
+            return kInvalidValue;
         }
 
         col = col * 26 + (ch.toUpper().unicode() - 'A' + 1);

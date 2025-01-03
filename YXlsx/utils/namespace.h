@@ -30,7 +30,7 @@
 #define QT_BEGIN_NAMESPACE_YXLSX namespace yxlsx {
 #define QT_END_NAMESPACE_YXLSX }
 
-inline constexpr int kInvalidInt = -1;
+inline constexpr int kInvalidValue = -1;
 inline constexpr int kExcelRowMax = 1048576;
 inline constexpr int kExcelColumnMax = 16384;
 

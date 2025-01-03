@@ -70,7 +70,7 @@ void Dimension::Init(const QString& dimension)
         qWarning() << "Invalid dimension coordinates. Resetting to an invalid state:"
                    << "Start =" << start << ", End =" << end;
 
-        top_row_ = left_column_ = bottom_row_ = right_column_ = kInvalidInt;
+        top_row_ = left_column_ = bottom_row_ = right_column_ = kInvalidValue;
     }
 }
 

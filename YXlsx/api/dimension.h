@@ -83,10 +83,10 @@ private:
     void Init(const QString& dimension);
 
 private:
-    int top_row_ { kInvalidInt };
-    int left_column_ { kInvalidInt };
-    int bottom_row_ { kInvalidInt };
-    int right_column_ { kInvalidInt };
+    int top_row_ { kInvalidValue };
+    int left_column_ { kInvalidValue };
+    int bottom_row_ { kInvalidValue };
+    int right_column_ { kInvalidValue };
 };
 
 QT_END_NAMESPACE_YXLSX

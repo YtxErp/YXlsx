@@ -52,8 +52,8 @@ private:
     void Init(const QString& coordinate);
 
 private:
-    int row_ { kInvalidInt };
-    int column_ { kInvalidInt };
+    int row_ { kInvalidValue };
+    int column_ { kInvalidValue };
 };
 
 QT_END_NAMESPACE_YXLSX
