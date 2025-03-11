@@ -33,7 +33,7 @@ enum class SheetType { kWorkSheet };
 
 class AbstractSheet : public AbstractOOXmlFile {
 public:
-    inline QString GetSheetName() const { return sheet_name_; }
+    inline const QString& GetSheetName() const { return sheet_name_; }
     inline SheetType GetSheetType() const { return sheet_type_; }
     inline int GetSheetId() const { return sheet_id_; }
 

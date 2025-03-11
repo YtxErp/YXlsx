@@ -47,7 +47,7 @@ public:
     QSet<std::pair<int, int>> RemoveSharedString(const QString& string, int row, int column);
 
     inline int GetSharedStringIndex(const QString& string) const { return string_index_hash_.value(string, -1); }
-    inline QList<QString> GetSharedString() const { return string_list_; }
+    inline const QList<QString>& GetSharedString() const { return string_list_; }
     inline bool IsEmpty() const { return string_list_.isEmpty(); }
 
     QString GetSharedString(int index) const;

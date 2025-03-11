@@ -45,8 +45,8 @@ public:
     virtual bool ParseByteArray(const QByteArray& data);
 
     inline QSharedPointer<RelationshipMgr> GetRelationship() const { return relationship_; }
-    inline void SetXmlPath(const QString path) { xml_path_ = path; }
-    inline QString GetXmlPath() const { return xml_path_; }
+    inline void SetXmlPath(const QString& path) { xml_path_ = path; }
+    inline const QString& GetXmlPath() const { return xml_path_; }
 
 protected:
     explicit AbstractOOXmlFile(OperationMode mode = OperationMode::kCreateNew);

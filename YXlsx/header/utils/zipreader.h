@@ -41,7 +41,7 @@ public:
     explicit ZipReader(QIODevice* device);
     ~ZipReader() = default;
 
-    inline QStringList GetFilePath() const { return file_path_; }
+    inline const QStringList& GetFilePath() const { return file_path_; }
     inline QByteArray GetFileData(const QString& file_path) const { return reader_->fileData(file_path); }
 
 private:
