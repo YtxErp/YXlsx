@@ -31,14 +31,14 @@
 
 QT_BEGIN_NAMESPACE_YXLSX
 
-inline const QLatin1String kCorePropertyies("http://schemas.openxmlformats.org/package/2006/metadata/core-properties");
+inline const QLatin1String kCoreProperties("http://schemas.openxmlformats.org/package/2006/metadata/core-properties");
 inline const QLatin1String kPLElements("http://purl.org/dc/elements/1.1/");
 inline const QLatin1String kPLTerms("http://purl.org/dc/terms/");
 inline const QLatin1String kPLDcmiType("http://purl.org/dc/dcmitype/");
 inline const QLatin1String kW3SchemaInstance("http://www.w3.org/2001/XMLSchema-instance");
 
 const QHash<QString, QString> DocPropsCore::kElementNamespaceHash { { QStringLiteral("creator"), kPLElements },
-    { QStringLiteral("lastModifiedBy"), kCorePropertyies }, { QStringLiteral("created"), kPLTerms }, { QStringLiteral("modified"), kPLTerms } };
+    { QStringLiteral("lastModifiedBy"), kCoreProperties }, { QStringLiteral("created"), kPLTerms }, { QStringLiteral("modified"), kPLTerms } };
 
 DocPropsCore::DocPropsCore(OperationMode mode)
     : AbstractOOXmlFile { mode }
@@ -69,17 +69,17 @@ void DocPropsCore::ComposeXml(QIODevice* device) const
     writer.writeStartDocument(QLatin1String("1.0"), true);
     writer.writeStartElement(QLatin1String("cp:coreProperties"));
 
-    writer.writeNamespace(kCorePropertyies, QLatin1String("cp"));
+    writer.writeNamespace(kCoreProperties, QLatin1String("cp"));
     writer.writeNamespace(kPLElements, QLatin1String("dc"));
     writer.writeNamespace(kPLTerms, QLatin1String("dcterms"));
     writer.writeNamespace(kPLDcmiType, QLatin1String("dcmitype"));
     writer.writeNamespace(kW3SchemaInstance, QLatin1String("xsi"));
 
     auto it = property_hash_.constFind(QStringLiteral("creator"));
-    writer.writeTextElement(kPLElements, QLatin1String("creator"), it != property_hash_.constEnd() ? it.value() : QStringLiteral("YXlsx Library"));
+    writer.writeTextElement(kPLElements, QLatin1String("creator"), it != property_hash_.constEnd() ? it.value() : QLatin1String("YXlsx Library"));
 
     it = property_hash_.constFind(QStringLiteral("lastModifiedBy"));
-    writer.writeTextElement(kCorePropertyies, QLatin1String("lastModifiedBy"), it != property_hash_.constEnd() ? it.value() : QStringLiteral("YXlsx Library"));
+    writer.writeTextElement(kCoreProperties, QLatin1String("lastModifiedBy"), it != property_hash_.constEnd() ? it.value() : QLatin1String("YXlsx Library"));
 
     auto WriteTimeElement = [&](QLatin1String name, const QString& value) {
         writer.writeStartElement(kPLTerms, name);

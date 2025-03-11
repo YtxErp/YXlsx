@@ -102,9 +102,9 @@ bool ContentType::ParseXml(QIODevice* device)
 
         const auto name { reader.name() };
 
-        if (name == QLatin1String("Default")) {
+        if (name == QStringLiteral("Default")) {
             ParseElement(reader.attributes(), default_hash_, QStringLiteral("Extension"), QStringLiteral("ContentType"));
-        } else if (name == QLatin1String("Override")) {
+        } else if (name == QStringLiteral("Override")) {
             ParseElement(reader.attributes(), override_hash_, QStringLiteral("PartName"), QStringLiteral("ContentType"));
         }
     }

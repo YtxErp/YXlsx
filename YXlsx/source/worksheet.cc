@@ -339,7 +339,7 @@ void Worksheet::ComposeCell(QXmlStreamWriter& writer, int row, int col, const QS
 
 void Worksheet::ParseSheet(QXmlStreamReader& reader)
 {
-    Q_ASSERT(reader.name() == QLatin1String("sheetData"));
+    Q_ASSERT(reader.name() == QStringLiteral("sheetData"));
 
     int row = 0;
     int column = 0;
@@ -350,7 +350,7 @@ void Worksheet::ParseSheet(QXmlStreamReader& reader)
 
         const auto name { reader.name() };
 
-        if (name == QLatin1String("row")) { // Row
+        if (name == QStringLiteral("row")) { // Row
             QXmlStreamAttributes attributes = reader.attributes();
 
             if (attributes.hasAttribute(QLatin1String("r")))
@@ -360,7 +360,7 @@ void Worksheet::ParseSheet(QXmlStreamReader& reader)
 
             column = 0;
 
-        } else if (name == QLatin1String("c")) // Cell
+        } else if (name == QStringLiteral("c")) // Cell
         {
             ProcessCell(reader, row, column);
         }
@@ -373,7 +373,7 @@ void Worksheet::ParseSheet(QXmlStreamReader& reader)
 
 void Worksheet::ProcessCell(QXmlStreamReader& reader, int row, int& column)
 {
-    Q_ASSERT(reader.name() == QLatin1String("c"));
+    Q_ASSERT(reader.name() == QStringLiteral("c"));
 
     QXmlStreamAttributes attributes { reader.attributes() };
     QString cell_reference = attributes.value(QLatin1String("r")).toString();
@@ -412,8 +412,8 @@ void Worksheet::ProcessCell(QXmlStreamReader& reader, int row, int& column)
     auto cell { QSharedPointer<Cell>::create(QVariant {}, cell_type) };
 
     // Parse the cell's sub-elements
-    while (!reader.atEnd() && !(reader.name() == QLatin1String("c") && reader.tokenType() == QXmlStreamReader::EndElement)) {
-        if (reader.readNextStartElement() && reader.name() == QLatin1String("v")) {
+    while (!reader.atEnd() && !(reader.name() == QStringLiteral("c") && reader.tokenType() == QXmlStreamReader::EndElement)) {
+        if (reader.readNextStartElement() && reader.name() == QStringLiteral("v")) {
             // Parse cell value
             QString value = reader.readElementText();
             cell->value = ParseCellValue(value, cell_type, row, column);
@@ -464,11 +464,11 @@ bool Worksheet::ParseXml(QIODevice* device)
 
         name = reader.name();
 
-        if (name == QLatin1String("dimension")) {
+        if (name == QStringLiteral("dimension")) {
             QXmlStreamAttributes attributes = reader.attributes();
             QString range = attributes.value(QLatin1String("ref")).toString();
             dimension_ = Dimension(range);
-        } else if (name == QLatin1String("sheetData")) {
+        } else if (name == QStringLiteral("sheetData")) {
             ParseSheet(reader);
         }
     }

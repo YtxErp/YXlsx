@@ -377,15 +377,15 @@ bool Workbook::ParseXml(QIODevice* device)
         const auto element_name { reader.name() };
 
         // Parse "sheet" elements
-        if (element_name == QLatin1String("sheet")) {
+        if (element_name == QStringLiteral("sheet")) {
             ParseSheet(reader);
         }
         // Parse "bookviews" elements
-        else if (element_name == QLatin1String("bookviews")) {
+        else if (element_name == QStringLiteral("bookviews")) {
             ParseBookViews(reader);
         }
         // Parse "definedName" elements
-        else if (element_name == QLatin1String("definedName")) {
+        else if (element_name == QStringLiteral("definedName")) {
             ParseDefinedName(reader);
         }
     }
@@ -401,10 +401,10 @@ bool Workbook::ParseXml(QIODevice* device)
 // Helper function to parse <bookviews> and <workbookView> elements
 void Workbook::ParseBookViews(QXmlStreamReader& reader)
 {
-    Q_ASSERT(reader.name() == QLatin1String("bookviews"));
+    Q_ASSERT(reader.name() == QStringLiteral("bookviews"));
 
-    while (!reader.atEnd() && !(reader.name() == QLatin1String("bookviews") && reader.tokenType() == QXmlStreamReader::EndElement)) {
-        if (reader.readNextStartElement() && reader.name() == QLatin1String("workbookView")) {
+    while (!reader.atEnd() && !(reader.name() == QStringLiteral("bookviews") && reader.tokenType() == QXmlStreamReader::EndElement)) {
+        if (reader.readNextStartElement() && reader.name() == QStringLiteral("workbookView")) {
             const auto attributes { reader.attributes() };
 
             x_window_ = GetXmlAttribute(attributes, QLatin1String("xWindow")).toInt();
@@ -419,7 +419,7 @@ void Workbook::ParseBookViews(QXmlStreamReader& reader)
 // Helper function to parse <sheet> elements
 void Workbook::ParseSheet(QXmlStreamReader& reader)
 {
-    Q_ASSERT(reader.name() == QLatin1String("sheet"));
+    Q_ASSERT(reader.name() == QStringLiteral("sheet"));
 
     const auto attributes { reader.attributes() };
 
@@ -454,7 +454,7 @@ void Workbook::ParseSheet(QXmlStreamReader& reader)
 // Helper function to parse <definedName> elements
 void Workbook::ParseDefinedName(QXmlStreamReader& reader)
 {
-    Q_ASSERT(reader.name() == QLatin1String("definedName"));
+    Q_ASSERT(reader.name() == QStringLiteral("definedName"));
 
     const auto attributes { reader.attributes() };
     DefinedName data;

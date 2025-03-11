@@ -29,9 +29,9 @@
 
 QT_BEGIN_NAMESPACE_YXLSX
 
-inline constexpr QLatin1String kOxDocument("http://schemas.openxmlformats.org/officeDocument/2006/relationships");
-inline constexpr QLatin1String kMsOffice("http://schemas.microsoft.com/office/2006/relationships");
-inline constexpr QLatin1String kOxPackage("http://schemas.openxmlformats.org/package/2006/relationships");
+inline const QString kOxDocument { QStringLiteral("http://schemas.openxmlformats.org/officeDocument/2006/relationships") };
+inline const QString kMsOffice { QStringLiteral("http://schemas.microsoft.com/office/2006/relationships") };
+inline const QString kOxPackage { QStringLiteral("http://schemas.openxmlformats.org/package/2006/relationships") };
 
 RelationshipMgr::RelationshipMgr() { }
 
@@ -129,7 +129,7 @@ bool RelationshipMgr::ParseXml(QIODevice* device)
         if (!reader.readNextStartElement())
             continue;
 
-        if (reader.name() == QLatin1String("Relationship")) {
+        if (reader.name() == QStringLiteral("Relationship")) {
             const auto attrs { reader.attributes() };
             if (!ParseRelationship(attrs)) {
                 return false; // Parsing failed, exit early

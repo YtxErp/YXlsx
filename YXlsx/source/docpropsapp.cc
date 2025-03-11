@@ -76,7 +76,7 @@ void DocPropsApp::ComposeXml(QIODevice* device) const
     }
 
     QXmlStreamWriter writer(device);
-    QString vt = QLatin1String("http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes");
+    auto vt { QLatin1String("http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes") };
 
     writer.writeStartDocument(QLatin1String("1.0"), true);
     writer.writeStartElement(QLatin1String("Properties"));
@@ -142,24 +142,24 @@ bool DocPropsApp::ParseXml(QIODevice* device)
 
         const auto name { reader.name() };
 
-        if (name == QLatin1String("Manager")) {
-            SetProperty(QLatin1String("manager"), reader.readElementText());
-        } else if (name == QLatin1String("Company")) {
-            SetProperty(QLatin1String("company"), reader.readElementText());
-        } else if (name == QLatin1String("Application")) {
-            SetProperty(QLatin1String("Application"), reader.readElementText());
-        } else if (name == QLatin1String("DocSecurity")) {
-            SetProperty(QLatin1String("DocSecurity"), reader.readElementText());
-        } else if (name == QLatin1String("ScaleCrop")) {
-            SetProperty(QLatin1String("ScaleCrop"), reader.readElementText());
-        } else if (name == QLatin1String("LinksUpToDate")) {
-            SetProperty(QLatin1String("LinksUpToDate"), reader.readElementText());
-        } else if (name == QLatin1String("SharedDoc")) {
-            SetProperty(QLatin1String("SharedDoc"), reader.readElementText());
-        } else if (name == QLatin1String("HyperlinksChanged")) {
-            SetProperty(QLatin1String("HyperlinksChanged"), reader.readElementText());
-        } else if (name == QLatin1String("AppVersion")) {
-            SetProperty(QLatin1String("AppVersion"), reader.readElementText());
+        if (name == QStringLiteral("Manager")) {
+            SetProperty(QStringLiteral("manager"), reader.readElementText());
+        } else if (name == QStringLiteral("Company")) {
+            SetProperty(QStringLiteral("company"), reader.readElementText());
+        } else if (name == QStringLiteral("Application")) {
+            SetProperty(QStringLiteral("Application"), reader.readElementText());
+        } else if (name == QStringLiteral("DocSecurity")) {
+            SetProperty(QStringLiteral("DocSecurity"), reader.readElementText());
+        } else if (name == QStringLiteral("ScaleCrop")) {
+            SetProperty(QStringLiteral("ScaleCrop"), reader.readElementText());
+        } else if (name == QStringLiteral("LinksUpToDate")) {
+            SetProperty(QStringLiteral("LinksUpToDate"), reader.readElementText());
+        } else if (name == QStringLiteral("SharedDoc")) {
+            SetProperty(QStringLiteral("SharedDoc"), reader.readElementText());
+        } else if (name == QStringLiteral("HyperlinksChanged")) {
+            SetProperty(QStringLiteral("HyperlinksChanged"), reader.readElementText());
+        } else if (name == QStringLiteral("AppVersion")) {
+            SetProperty(QStringLiteral("AppVersion"), reader.readElementText());
         }
     }
 

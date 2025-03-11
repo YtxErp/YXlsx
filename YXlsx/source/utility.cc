@@ -32,7 +32,7 @@ QT_BEGIN_NAMESPACE_YXLSX
 QStringList Utility::SplitPath(const QString& path)
 {
     if (path.isEmpty())
-        return { QStringLiteral("."), QStringLiteral("") };
+        return { QStringLiteral("."), {} };
 
     const auto index { qMax(path.lastIndexOf(QLatin1Char('/')), path.lastIndexOf(QLatin1Char('\\'))) };
 
@@ -191,11 +191,8 @@ QString Utility::ComposeCoordinate(int row, int column, bool row_abs, bool col_a
     if (row <= 0 || column <= 0)
         return {};
 
-    return QString(QStringLiteral("%1%2%3%4"))
-        .arg(col_abs ? QStringLiteral("$") : QStringLiteral(""))
-        .arg(ComposeColumn(column))
-        .arg(row_abs ? QStringLiteral("$") : QStringLiteral(""))
-        .arg(row);
+    return (col_abs ? QLatin1String("$") : QLatin1String("")) + ComposeColumn(column) + (row_abs ? QLatin1String("$") : QLatin1String(""))
+        + QString::number(row);
 }
 
 QString Utility::ComposeColumn(int column)

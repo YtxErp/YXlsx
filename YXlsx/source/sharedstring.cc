@@ -143,12 +143,12 @@ void SharedString::ComposeXml(QIODevice* device) const
 
 void SharedString::ParseSharedString(QXmlStreamReader& reader)
 {
-    Q_ASSERT(reader.name() == QLatin1String("si"));
+    Q_ASSERT(reader.name() == QStringLiteral("si"));
 
     QString string {};
 
-    while (!reader.atEnd() && !(reader.tokenType() == QXmlStreamReader::EndElement && reader.name() == QLatin1String("si"))) {
-        if (reader.readNextStartElement() && reader.name() == QLatin1String("t")) {
+    while (!reader.atEnd() && !(reader.tokenType() == QXmlStreamReader::EndElement && reader.name() == QStringLiteral("si"))) {
+        if (reader.readNextStartElement() && reader.name() == QStringLiteral("t")) {
             string += reader.readElementText();
         }
     }
@@ -170,7 +170,7 @@ bool SharedString::ParseXml(QIODevice* device)
         if (!reader.readNextStartElement())
             continue;
 
-        if (reader.name() == QLatin1String("sst")) {
+        if (reader.name() == QStringLiteral("sst")) {
             // Process root <sst> node, check for 'uniqueCount' attribute
             const auto attributes { reader.attributes() };
             if ((has_unique_count_attr = attributes.hasAttribute(QLatin1String("uniqueCount")))) {
@@ -181,7 +181,7 @@ bool SharedString::ParseXml(QIODevice* device)
                     return false;
                 }
             }
-        } else if (reader.name() == QLatin1String("si")) {
+        } else if (reader.name() == QStringLiteral("si")) {
             // Process shared string node <si>
             ParseSharedString(reader);
         }
