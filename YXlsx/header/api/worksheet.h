@@ -88,10 +88,17 @@ private:
     SheetFormatProps sheet_format_props_ {};
     QMap<std::pair<int, int>, QSharedPointer<Cell>> matrix_ {};
 
-    static constexpr std::array<std::pair<int, CellType>, 9> type_map
-        = { { { QMetaType::QString, CellType::kSharedString }, { QMetaType::Int, CellType::kNumber }, { QMetaType::UInt, CellType::kNumber },
-            { QMetaType::LongLong, CellType::kNumber }, { QMetaType::ULongLong, CellType::kNumber }, { QMetaType::Double, CellType::kNumber },
-            { QMetaType::Float, CellType::kNumber }, { QMetaType::Bool, CellType::kBoolean }, { QMetaType::QDateTime, CellType::kDate } } };
+    static constexpr std::array<std::pair<int, CellType>, 9> type_map = { {
+        { QMetaType::QString, CellType::kSharedString },
+        { QMetaType::Int, CellType::kNumber },
+        { QMetaType::UInt, CellType::kNumber },
+        { QMetaType::LongLong, CellType::kNumber },
+        { QMetaType::ULongLong, CellType::kNumber },
+        { QMetaType::Double, CellType::kNumber },
+        { QMetaType::Float, CellType::kNumber },
+        { QMetaType::Bool, CellType::kBoolean },
+        { QMetaType::QDateTime, CellType::kDate },
+    } };
 };
 
 QT_END_NAMESPACE_YXLSX

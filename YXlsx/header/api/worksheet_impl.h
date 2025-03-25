@@ -21,23 +21,22 @@ template <Container T> bool Worksheet::WriteColumn(int row, int column, const T&
         return false;
     }
 
-    const QVariant first_value { QVariant(*std::ranges::begin(container)) };
-    const CellType cell_type { DetermineCellType(first_value) };
-
-    if (cell_type == CellType::kUnknown) {
-        return false;
-    }
-
     int current_row { row };
     for (const auto& value : container) {
         QVariant qvalue(value);
 
-        auto cell { QSharedPointer<Cell>::create(qvalue, cell_type) };
-        if (cell_type == CellType::kSharedString) {
-            shared_string_->SetSharedString(qvalue.toString(), current_row, column);
+        const CellType cell_type { DetermineCellType(qvalue) };
+
+        if (cell_type != CellType::kUnknown) {
+            auto cell { QSharedPointer<Cell>::create(qvalue, cell_type) };
+
+            if (cell_type == CellType::kSharedString) {
+                shared_string_->SetSharedString(qvalue.toString(), current_row, column);
+            }
+
+            WriteMatrix(current_row, column, cell);
         }
 
-        WriteMatrix(current_row, column, cell);
         ++current_row;
     }
 
@@ -63,16 +62,16 @@ template <Container T> bool Worksheet::WriteRow(int row, int column, const T& co
 
         const CellType cell_type { DetermineCellType(qvalue) };
 
-        if (cell_type == CellType::kUnknown) {
-            continue;
+        if (cell_type != CellType::kUnknown) {
+            auto cell { QSharedPointer<Cell>::create(qvalue, cell_type) };
+
+            if (cell_type == CellType::kSharedString) {
+                shared_string_->SetSharedString(qvalue.toString(), row, current_column);
+            }
+
+            WriteMatrix(row, current_column, cell);
         }
 
-        auto cell { QSharedPointer<Cell>::create(qvalue, cell_type) };
-        if (cell_type == CellType::kSharedString) {
-            shared_string_->SetSharedString(qvalue.toString(), row, current_column);
-        }
-
-        WriteMatrix(row, current_column, cell);
         ++current_column;
     }
 
